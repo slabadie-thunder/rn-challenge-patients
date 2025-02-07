@@ -10,6 +10,7 @@ export default function Favorites() {
       className="pt-safe flex-1 items-center justify-center gap-5"
     >
       <Typography>Favorites</Typography>
+      <Button title="Go to Home" onPress={() => router.push("/")} />
     </Container>
   );
 }
