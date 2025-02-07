@@ -3,7 +3,7 @@ import * as Application from "expo-application";
 import * as Device from "expo-device";
 import axios, { type AxiosError } from "axios";
 
-import {  useUserStore } from "@/stores";
+import { useUserStore } from "@/stores";
 import { HttpHeader } from "./enums";
 
 const baseConfig = {

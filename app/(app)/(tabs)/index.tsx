@@ -17,14 +17,10 @@ export default function Tabs() {
     ref.current?.present();
   }, []);
 
-
   return (
     <Container className="flex-1">
       <Column className="py-safe justify-between" expanded gap="lg">
-        <Column className="gap-5">
-          
-        </Column>
-
+        <Column className="gap-5"></Column>
 
         <SnapPointsBottomSheetModal ref={ref} snapPoints={["25%", "50%"]}>
           <BottomSheetContainer>
