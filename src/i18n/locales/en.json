@@ -1,0 +1,25 @@
+{
+  "login": {
+    "login_screen": "Login Screen",
+    "login": "Login",
+    "email": "E-mail",
+    "password": "Password"
+  },
+  "form": {
+    "patient_name_required": "Name is required.",
+    "patient_description_required": "Description is required.",
+    "patient_website_required": "Website is required",
+    "valid_url_message": "Valid URL is required",
+    "url_format_message": "The URL must start with 'http://' or 'https://'.",
+    "email_required": "E-mail is required.",
+    "email_not_valid": "E-mail is not valid.",
+    "conuntry_required": "Country is required.",
+    "address_required": "Address is required.",
+    "city_required": "City is required.",
+    "state_required": "State is required.",
+    "zip_code_required": "ZIP code is required.",
+    "zip_code_number": "ZIP code should be only numbers.",
+    "zip_code_max": "ZIP code should be 6 digits or less.",
+    "password_required": "Password is required."
+  }
+}

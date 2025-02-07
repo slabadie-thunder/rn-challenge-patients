@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "RN Challenge Patients",
+    "slug": "rn-challenge-patients",
+    "version": "0.0.1",
+    "scheme": "rn-challenge-patients",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "newArchEnabled": true,
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "org.challenge.patients",
+      "requireFullScreen": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "buildNumber": "2"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.challenge.patients"
+    },
+    "web": {
+      "favicon": ".src/assets/favicon.png"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Inter/Inter-Regular.ttf",
+            "./src/assets/fonts/Inter/Inter-Medium.ttf",
+            "./src/assets/fonts/Inter/Inter-SemiBold.ttf",
+            "./src/assets/fonts/Inter/Inter-Bold.ttf"
+          ]
+        }
+      ],
+      "expo-router"
+    ]
+  }
+}
