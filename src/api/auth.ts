@@ -1,5 +1,5 @@
 import { queryClient } from "@/query";
-import { useAuthStore, useUserStore, type User } from "@/stores";
+import { useUserStore, type User } from "@/stores";
 import { asyncTimeout } from "@/utils";
 
 type LoginParams = {
@@ -26,6 +26,5 @@ export const login = async (params: LoginParams): Promise<LoginResponse> => {
 
 export const logout = () => {
   useUserStore.getState().reset();
-  useAuthStore.getState().reset();
   queryClient.clear();
 };

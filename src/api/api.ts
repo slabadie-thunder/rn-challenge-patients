@@ -3,7 +3,7 @@ import * as Application from "expo-application";
 import * as Device from "expo-device";
 import axios, { type AxiosError } from "axios";
 
-import { useAuthStore, useUserStore } from "@/stores";
+import {  useUserStore } from "@/stores";
 import { HttpHeader } from "./enums";
 
 const baseConfig = {
@@ -29,8 +29,6 @@ axios.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       const setUser = useUserStore.getState().setUser;
-      const setAccessToken = useAuthStore.getState().setAccessToken;
-      setAccessToken(null);
       setUser(null);
       // kill access token OR get new accessToken with refreshToken
     }
@@ -41,9 +39,6 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use(
   (config) => {
-    const accessToken = useAuthStore.getState().accessToken;
-    if (accessToken)
-      config.headers.set("Authorization", `Bearer ${accessToken}`);
     return config;
   },
   (error) => Promise.reject(error),

@@ -22,9 +22,9 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="components"
+        name="favorites"
         options={{
-          title: "Components",
+          title: "Favorites",
           tabBarIcon: () => <Icon name="QQ" />,
           headerShown: true,
         }}
