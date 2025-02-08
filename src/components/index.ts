@@ -8,3 +8,6 @@ export * from "./flex";
 export * from "./inputs";
 export * from "./modals";
 export * from "./toast";
+export * from "./Image";
+export * from "./Divider";
+export * from "./patients";

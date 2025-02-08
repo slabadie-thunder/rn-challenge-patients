@@ -70,7 +70,7 @@ export const Button: FC<ButtonProps> = ({
   );
 
   const iconComponent = useMemo(() => {
-    if (icon) return <Icon name={icon} />;
+    if (icon) return <Icon name={icon}  />;
   }, [icon]);
 
   return (

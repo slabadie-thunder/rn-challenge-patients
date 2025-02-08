@@ -12,6 +12,11 @@ const columnVariants = tv({
       md: "gap-4",
       lg: "gap-6",
     },
+    align: {
+      start: "items-start",
+      center: "items-center",
+      end: "items-end",
+    },
   },
   defaultVariants: {
     gap: "none",
@@ -22,10 +27,10 @@ type ColumnVariants = VariantProps<typeof columnVariants>;
 
 type ColumnProps = ViewProps & ColumnVariants & FlexVariants;
 
-export const Column: FC<ColumnProps> = ({ className, gap, ...props }) => (
+export const Column: FC<ColumnProps> = ({ className, gap, align, ...props }) => (
   <Flex
     direction="column"
-    className={columnVariants({ gap, className })}
+    className={columnVariants({ gap, align, className })}
     {...props}
   />
 );

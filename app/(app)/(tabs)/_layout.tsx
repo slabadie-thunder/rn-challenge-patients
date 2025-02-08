@@ -16,7 +16,7 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Patients",
           tabBarIcon: () => <Icon name="home" />,
           headerShown: true,
         }}
@@ -25,7 +25,7 @@ export default function Layout() {
         name="favorites"
         options={{
           title: "Favorites",
-          tabBarIcon: () => <Icon name="QQ" />,
+          tabBarIcon: () => <Icon name="heart" />,
           headerShown: true,
         }}
       />
