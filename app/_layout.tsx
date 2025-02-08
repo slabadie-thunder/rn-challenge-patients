@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { DevToolsBubble } from "react-native-react-query-devtools";
 import Toast from "react-native-toast-message";
 import { Slot, SplashScreen } from "expo-router";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { DevToolsBubble } from "react-native-react-query-devtools";
+
 import { toastConfig } from "@/components/toast";
 import { useFonts } from "@/hooks";
 import { useAppState } from "@/hooks/react-query";

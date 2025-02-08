@@ -35,7 +35,13 @@ type RowVariants = VariantProps<typeof rowVariants>;
 
 type RowProps = ViewProps & RowVariants & FlexVariants;
 
-export const Row: FC<RowProps> = ({ className, gap, align, justify, ...props }) => (
+export const Row: FC<RowProps> = ({
+  className,
+  gap,
+  align,
+  justify,
+  ...props
+}) => (
   <Flex
     direction="row"
     className={rowVariants({ gap, className, align, justify })}

@@ -5,7 +5,5 @@
     ".*ClassName",
     ".*Styles"
   ],
-  "exportall.config.folderListener": [
-    "/src/components/patients"
-  ]
+  "exportall.config.folderListener": ["/src/components/patients"]
 }

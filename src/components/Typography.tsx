@@ -35,7 +35,6 @@ export const textVariants = tv({
       lowercase: "lowercase",
       uppercase: "uppercase",
     },
-    
   },
   defaultVariants: {
     alignment: "center",

@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Linking, Animated } from "react-native";
+import { useRef, useState } from "react";
+import { Animated, Linking } from "react-native";
 
 import type { Patient } from "@/api";
 import { DEFAULT_AVATAR } from "@/constants/constants";
@@ -23,7 +23,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
       toValue: isExpanded ? 20 : 100,
       useNativeDriver: false,
       friction: 10,
-      tension: 40
+      tension: 40,
     }).start();
   };
 
@@ -53,11 +53,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
         </Row>
         <Row className="overflow-hidden">
           <Animated.View style={{ maxHeight: animatedHeight }}>
-            <Typography
-              size="body"
-              font="bold"
-              alignment="left"
-            >
+            <Typography size="body" font="bold" alignment="left">
               {patient.description}
             </Typography>
           </Animated.View>

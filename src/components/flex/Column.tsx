@@ -27,7 +27,12 @@ type ColumnVariants = VariantProps<typeof columnVariants>;
 
 type ColumnProps = ViewProps & ColumnVariants & FlexVariants;
 
-export const Column: FC<ColumnProps> = ({ className, gap, align, ...props }) => (
+export const Column: FC<ColumnProps> = ({
+  className,
+  gap,
+  align,
+  ...props
+}) => (
   <Flex
     direction="column"
     className={columnVariants({ gap, align, className })}

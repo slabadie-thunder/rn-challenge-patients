@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { FlatList } from "react-native";
 import { useRouter } from "expo-router";
 import { BottomSheetView, type BottomSheetModal } from "@gorhom/bottom-sheet";
 
@@ -8,9 +9,8 @@ import {
   BottomSheetContainer,
   SnapPointsBottomSheetModal,
 } from "@/components/modals";
-import { useGetPatients } from "@/query/patient";
 import { PatientCard } from "@/components/patients";
-import { FlatList } from "react-native";
+import { useGetPatients } from "@/query/patient";
 
 const ItemSeparator = () => <Divider className="my-2" />;
 
