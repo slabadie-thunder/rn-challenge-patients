@@ -1,16 +1,36 @@
-import { useRouter } from "expo-router";
+import { FlatList } from "react-native";
 
-import { Button, Container, Typography } from "@/components";
+import { Container, Divider, PatientCard } from "@/components";
+import { usePatientOperations } from "@/hooks";
+import { usePatientStore } from "@/stores";
+
+
+const ItemSeparator = () => <Divider className="my-2" />;
 
 export default function Favorites() {
-  const router = useRouter();
+  const { favoritePatients } = usePatientStore();
+  const { handleEditPatient, handleDeletePatient, handleFavoritePatient } =
+    usePatientOperations();
+
   return (
     <Container
       expanded
-      className="pt-safe flex-1 items-center justify-center gap-5"
+      className="flex-1 items-center justify-center gap-5 py-4"
     >
-      <Typography>Favorites</Typography>
-      <Button title="Go to Home" onPress={() => router.push("/")} />
+      <FlatList
+        data={favoritePatients}
+        renderItem={({ item }) => (
+          <PatientCard
+            patient={item}
+            onEditPatient={handleEditPatient}
+            onDeletePatient={handleDeletePatient}
+            onFavoritePatient={handleFavoritePatient}
+          />
+        )}
+        ItemSeparatorComponent={ItemSeparator}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ gap: 10 }}
+      />
     </Container>
   );
 }

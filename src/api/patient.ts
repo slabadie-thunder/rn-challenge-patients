@@ -32,3 +32,8 @@ export const editPatient = async (patient: EditPatientParams) => {
   const { data } = await api.put<Patient>(`/users/${patient.id}`, patient);
   return data;
 };
+
+export const deletePatient = async (id: string) => {
+  const { data } = await api.delete<Patient>(`/users/${id}`);
+  return data;
+};

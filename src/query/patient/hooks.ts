@@ -1,7 +1,7 @@
 import Toast from "react-native-toast-message";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { createPatient, editPatient } from "@/api";
+import { createPatient, deletePatient, editPatient } from "@/api";
 import { patientQueries } from "./queries";
 
 export const useGetPatients = () =>
@@ -45,6 +45,29 @@ export const useUpdatePatient = () => {
     },
     meta: {
       errorMessage: "Error updating patient",
+    },
+    onError: () => {
+      Toast.show({
+        type: "error",
+        text1: "Something went wrong",
+      });
+    },
+  });
+};
+
+export const useDeletePatient = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deletePatient,
+    onSuccess: () => {
+      Toast.show({
+        type: "success",
+        text1: "Patient deleted",
+      });
+      queryClient.invalidateQueries(patientQueries.all);
+    },
+    meta: {
+      errorMessage: "Error deleting patient",
     },
     onError: () => {
       Toast.show({

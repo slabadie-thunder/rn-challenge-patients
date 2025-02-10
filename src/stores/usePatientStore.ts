@@ -11,7 +11,14 @@ type PatientState = {
   isPatientModalOpen: boolean;
 };
 
-type PatientActions = SetEvents<PatientState> & Resettable;
+type PatientFavotitesActions = {
+  addFavoritePatient: (patient: Patient) => void;
+  removeFavoritePatient: (patient: Patient) => void;
+};
+
+type PatientActions = SetEvents<PatientState> &
+  Resettable &
+  PatientFavotitesActions;
 
 type PatientStore = PatientState & PatientActions;
 
@@ -26,6 +33,16 @@ export const usePatientStore = create(
         set({ isPatientModalOpen }),
       setFavoritePatients: (favoritePatients: Patient[]) =>
         set({ favoritePatients }),
+      addFavoritePatient: (patient: Patient) =>
+        set((state) => ({
+          favoritePatients: [...state.favoritePatients, patient],
+        })),
+      removeFavoritePatient: (patient: Patient) =>
+        set((state) => ({
+          favoritePatients: state.favoritePatients.filter(
+            (p) => p.id !== patient.id,
+          ),
+        })),
       reset() {
         set({ favoritePatients: [], patient: null, isPatientModalOpen: false });
       },

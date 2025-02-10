@@ -14,6 +14,16 @@ import { queryClient } from "@/query";
 import "../global.css";
 import "../src/i18n";
 
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
