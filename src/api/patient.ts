@@ -27,3 +27,8 @@ export const createPatient = async (patient: AddPatientParams) => {
   const { data } = await api.post<Patient>(`/users`, patient);
   return data;
 };
+
+export const editPatient = async (patient: EditPatientParams) => {
+  const { data } = await api.put<Patient>(`/users/${patient.id}`, patient);
+  return data;
+};

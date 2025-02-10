@@ -1,19 +1,22 @@
 import { useEffect, useRef } from "react";
-import { Button } from "react-native";
 import { useRouter } from "expo-router";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { useCreatePatient, useUpdatePatient } from "@/query/patient";
 import { patientSchema, type PatientForm } from "@/schemas";
 import { usePatientStore } from "@/stores";
-import { Row } from "../flex";
+import { Button } from "../Button";
+import { Column, Row } from "../flex";
 import { TextInputField } from "../inputs";
 import { BottomSheetContainer, SnapPointsBottomSheetModal } from "../modals";
 
 const PatientModal = () => {
   const ref = useRef<BottomSheetModal>(null);
   const { patient, setIsPatientModalOpen } = usePatientStore();
+  const { mutate: createPatient } = useCreatePatient();
+  const { mutate: editPatient } = useUpdatePatient();
   const { control, handleSubmit } = useForm<PatientForm>({
     resolver: zodResolver(patientSchema),
     mode: "onTouched",
@@ -22,12 +25,24 @@ const PatientModal = () => {
       avatar: patient?.avatar ?? "",
       description: patient?.description ?? "",
       website: patient?.website ?? "",
-      id: patient?.id ?? "",
+      id: patient?.id ?? "0",
     },
   });
 
   const onSubmit = (data: PatientForm) => {
-    console.log(data);
+    if (patient) {
+      editPatient(data, {
+        onSuccess: () => {
+          closeModal();
+        },
+      });
+    } else {
+      createPatient(data, {
+        onSuccess: () => {
+          closeModal();
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -42,41 +57,47 @@ const PatientModal = () => {
   return (
     <SnapPointsBottomSheetModal
       ref={ref}
-      snapPoints={["50%", "75%"]}
+      snapPoints={["60%", "50%"]}
       onDismiss={closeModal}
     >
       <BottomSheetContainer>
         <BottomSheetView className="pb-safe">
-          <TextInputField
-            control={control}
-            name="id"
-            input={{ label: "Id", editable: false }}
-          />
-          <TextInputField
-            control={control}
-            name="name"
-            input={{ label: "Name" }}
-          />
-          <TextInputField
-            control={control}
-            name="avatar"
-            input={{ label: "Avatar" }}
-          />
-          <TextInputField
-            control={control}
-            name="description"
-            input={{ label: "Description" }}
-          />
-          <TextInputField
-            control={control}
-            name="website"
-            input={{ label: "Website" }}
-          />
+          <Column gap="md">
+            <TextInputField
+              control={control}
+              name="id"
+              input={{ label: "Id", editable: false }}
+            />
+            <TextInputField
+              control={control}
+              name="name"
+              input={{ label: "Name" }}
+            />
+            <TextInputField
+              control={control}
+              name="avatar"
+              input={{ label: "Avatar" }}
+            />
+            <TextInputField
+              control={control}
+              name="description"
+              input={{ label: "Description" }}
+            />
+            <TextInputField
+              control={control}
+              name="website"
+              input={{ label: "Website" }}
+            />
 
-          <Row>
-            <Button title="Close" onPress={closeModal} />
-            <Button title="Save" onPress={handleSubmit(onSubmit)} />
-          </Row>
+            <Row gap="md" justify="center">
+              <Button variant="solid" title="Close" onPress={closeModal} />
+              <Button
+                variant="solid"
+                title="Save"
+                onPress={handleSubmit(onSubmit)}
+              />
+            </Row>
+          </Column>
         </BottomSheetView>
       </BottomSheetContainer>
     </SnapPointsBottomSheetModal>

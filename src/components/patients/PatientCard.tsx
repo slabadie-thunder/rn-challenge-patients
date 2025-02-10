@@ -46,7 +46,8 @@ const PatientCard = ({ patient, onEditPatient }: PatientCardProps) => {
             {patient.website ? (
               <Typography
                 color="tertiary"
-                className="underline"
+                numberOfLines={1}
+                className="max-w-80 underline"
                 onPress={() => Linking.openURL(patient.website)}
               >
                 {patient.website}

@@ -16,7 +16,7 @@ const validateUrl = (url: string) => {
 };
 
 export const patientSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().min(1, { message: i18n.t("form.patient_name_required") }),
   avatar: z
     .string()

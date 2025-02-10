@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Tabs } from "expo-router";
 
 import { Button, Icon, PatientModal } from "@/components";
@@ -5,7 +6,18 @@ import { usePatientStore } from "@/stores";
 import { colors } from "@/utils";
 
 export default function Layout() {
-  const { isPatientModalOpen } = usePatientStore();
+  const { isPatientModalOpen, setIsPatientModalOpen, setPatient } =
+    usePatientStore();
+  useEffect(() => {
+    return () => {
+      setIsPatientModalOpen(false);
+    };
+  }, [setIsPatientModalOpen]);
+
+  const onCreatePatient = () => {
+    setPatient(null);
+    setIsPatientModalOpen(true);
+  };
 
   return (
     <>
@@ -24,7 +36,7 @@ export default function Layout() {
             tabBarIcon: () => <Icon name="home" />,
             headerShown: true,
             headerRight: () => (
-              <Button variant="ghost" icon="plus" onPress={() => {}} />
+              <Button variant="ghost" icon="plus" onPress={onCreatePatient} />
             ),
           }}
         />
