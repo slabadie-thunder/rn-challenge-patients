@@ -64,7 +64,7 @@ export const Button: FC<ButtonProps> = ({
 }) => {
   const textType = useMemo<TextVariants>(
     () => ({
-      color: busy ? "primary" : variant === "solid" ? "secondary" : "primary",
+      color: busy ? "primary" : variant === "solid" ? "tertiary" : "primary",
     }),
     [variant, busy],
   );

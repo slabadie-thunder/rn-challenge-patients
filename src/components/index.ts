@@ -11,3 +11,4 @@ export * from "./toast";
 export * from "./Image";
 export * from "./Divider";
 export * from "./patients";
+export * from "./EmptyState";
