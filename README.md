@@ -24,8 +24,10 @@ La app debe contar con dos bottom tabs:
 Para la primera se debe realizar una listado de pacientes, con la posibilidad de agregar, editar y eliminar pacientes.
 
 - Cada paciente debe tener un nombre, apellido, descripcion, una url y una foto.
-- Para ver toda la descripcion del paciente y eliminar un paciente se deben usar animaciones.
-- Para agregar y editar un paciente se debe usar un modal.
-- Cada paciente se puede marcar como "favorito", o que es mi paciente.
+- Se debe poder buscar un paciente por nombre utilizando debounce
+- Para ver toda la descripcion del paciente se deben usar animaciones.
+- Para eliminar un paciente se debe usar drag & drop.
+- Para agregar y editar un paciente se debe usar un modal (bottom sheet).
+- Cada paciente se puede marcar como "favorito", o que es mi paciente (utilizar swipe).
 
 En la segunda se deben listar los pacientes favoritos (o los que serian mis pacientes).

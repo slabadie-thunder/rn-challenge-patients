@@ -1,34 +1,74 @@
-import { useCallback, useRef } from "react";
-import { useRouter } from "expo-router";
-import { BottomSheetView, type BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useEffect, useState } from "react";
+import { FlatList } from "react-native";
 
-import { Button, Container, Typography } from "@/components";
-import { Column } from "@/components/flex";
+import { type Patient } from "@/api";
+import { LightItLogo } from "@/assets";
 import {
-  BottomSheetContainer,
-  SnapPointsBottomSheetModal,
-} from "@/components/modals";
+  Container,
+  Divider,
+  EmptyState,
+  TextInput,
+  Typography,
+} from "@/components";
+import { Column } from "@/components/flex";
+import { PatientCard } from "@/components/patients";
+import { usePatientOperations } from "@/hooks";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useGetPatients } from "@/query/patient";
+
+const ItemSeparator = () => <Divider className="my-2" />;
 
 export default function Tabs() {
-  const router = useRouter();
-  const ref = useRef<BottomSheetModal>(null);
+  const { data, isLoading, isError } = useGetPatients();
+  const [filteredPatients, setFilteredPatients] = useState<Patient[]>();
+  const { handleEditPatient, handleDeletePatient, handleFavoritePatient } =
+    usePatientOperations();
 
-  const handleOpenModal = useCallback(() => {
-    ref.current?.present();
-  }, []);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
+
+  useEffect(() => {
+    if (debouncedSearch) {
+      setFilteredPatients(
+        data?.filter((patient) =>
+          patient.name.toLowerCase().includes(debouncedSearch.toLowerCase()),
+        ),
+      );
+    } else {
+      setFilteredPatients(data);
+    }
+  }, [data, debouncedSearch]);
 
   return (
     <Container className="flex-1">
-      <Column className="py-safe justify-between" expanded gap="lg">
-        <Column className="gap-5"></Column>
+      <Column gap="lg" className="py-4">
+        <TextInput
+          placeholder="Search"
+          onChangeText={setSearch}
+          value={search}
+        />
+        {isLoading && <Typography>Loading...</Typography>}
+        {isError && <Typography>Error</Typography>}
+        {filteredPatients?.length === 0 && (
+          <EmptyState icon={<LightItLogo />} subtitle="No patients found" />
+        )}
 
-        <SnapPointsBottomSheetModal ref={ref} snapPoints={["25%", "50%"]}>
-          <BottomSheetContainer>
-            <BottomSheetView className="pb-safe">
-              <Typography>Modal</Typography>
-            </BottomSheetView>
-          </BottomSheetContainer>
-        </SnapPointsBottomSheetModal>
+        <FlatList
+          data={filteredPatients}
+          renderItem={({ item }) => (
+            <PatientCard
+              key={item.id}
+              patient={item}
+              onEditPatient={handleEditPatient}
+              onDeletePatient={handleDeletePatient}
+              onFavoritePatient={handleFavoritePatient}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ gap: 10 }}
+          ItemSeparatorComponent={ItemSeparator}
+          showsVerticalScrollIndicator={false}
+        />
       </Column>
     </Container>
   );
