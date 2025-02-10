@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "expo-router";
-import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import {
+  launchImageLibraryAsync,
+  requestMediaLibraryPermissionsAsync,
+} from "expo-image-picker";
+import { BottomSheetView, type BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -20,7 +23,7 @@ const PatientModal = () => {
   const [error, setError] = useState(false);
   const { mutate: createPatient } = useCreatePatient();
   const { mutate: editPatient } = useUpdatePatient();
-  const { control, handleSubmit } = useForm<PatientForm>({
+  const { control, handleSubmit, setValue, getValues } = useForm<PatientForm>({
     resolver: zodResolver(patientSchema),
     mode: "onTouched",
     defaultValues: {
@@ -57,6 +60,26 @@ const PatientModal = () => {
     ref.current?.dismiss();
   };
 
+  const onSelectAvatar = async () => {
+    const permissionResult = await requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult?.granted) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    const result = await launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setValue("avatar", result.assets[0].uri);
+    }
+  };
+
   return (
     <SnapPointsBottomSheetModal
       ref={ref}
@@ -67,19 +90,21 @@ const PatientModal = () => {
         <BottomSheetView className="pb-safe">
           <Column gap="md">
             <Row justify="center">
-              <Image
-                source={{
-                  uri:
-                    error || !patient?.avatar
-                      ? DEFAULT_AVATAR
-                      : patient?.avatar,
-                }}
-                onError={() => {
-                  setError(true);
-                }}
-                className="h-20 w-20 rounded-full"
-                avatar
-              />
+              <Button variant="ghost" onPress={onSelectAvatar}>
+                <Image
+                  source={{
+                    uri:
+                      error || !getValues("avatar")
+                        ? DEFAULT_AVATAR
+                        : getValues("avatar"),
+                  }}
+                  onError={() => {
+                    setError(true);
+                  }}
+                  className="h-20 w-20 rounded-full"
+                  avatar
+                />
+              </Button>
             </Row>
             <TextInputField
               control={control}
@@ -94,7 +119,7 @@ const PatientModal = () => {
             <TextInputField
               control={control}
               name="description"
-              input={{ label: "Description" }}
+              input={{ label: "Description", numberOfLines: 2 }}
             />
             <TextInputField
               control={control}

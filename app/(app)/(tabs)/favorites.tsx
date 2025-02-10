@@ -4,7 +4,6 @@ import { Container, Divider, PatientCard } from "@/components";
 import { usePatientOperations } from "@/hooks";
 import { usePatientStore } from "@/stores";
 
-
 const ItemSeparator = () => <Divider className="my-2" />;
 
 export default function Favorites() {
