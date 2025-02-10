@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { type FC } from "react";
 import {
   Image as ImageNative,
-  ImageProps as ImageNativeProps,
+  type ImageProps as ImageNativeProps,
 } from "react-native";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const imageVariants = tv({
-  base: "max-w-full max-h-full",
+  base: "max-h-full max-w-full",
   variants: {
     avatar: {
       true: "h-14 w-14 rounded-full",

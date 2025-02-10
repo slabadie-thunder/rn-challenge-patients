@@ -10,9 +10,10 @@ import { Typography } from "../Typography";
 
 type PatientCardProps = {
   patient: Patient;
+  onEditPatient: (patient: Patient) => void;
 };
 
-const PatientCard = ({ patient }: PatientCardProps) => {
+const PatientCard = ({ patient, onEditPatient }: PatientCardProps) => {
   const [error, setError] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const animatedHeight = useRef(new Animated.Value(20)).current;
@@ -39,7 +40,9 @@ const PatientCard = ({ patient }: PatientCardProps) => {
             avatar
           />
           <Column align="start">
-            <Typography font="bold">{patient.name}</Typography>
+            <Typography font="bold" onPress={() => onEditPatient(patient)}>
+              {patient.name}
+            </Typography>
             {patient.website ? (
               <Typography
                 color="tertiary"

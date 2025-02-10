@@ -1,1 +1,2 @@
-export * from "./PatientCard";
+export * from './PatientCard';
+export * from './PatientModal';
