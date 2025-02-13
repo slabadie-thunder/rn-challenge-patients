@@ -1,10 +1,10 @@
-import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 import { Container, Divider, PatientCard } from "@/components";
 import { usePatientOperations } from "@/hooks";
 import { usePatientStore } from "@/stores";
 
-const ItemSeparator = () => <Divider className="my-2" />;
+const ItemSeparator = () => <Divider className="my-2 h-0.5" />;
 
 export default function Favorites() {
   const { favoritePatients } = usePatientStore();
@@ -12,11 +12,8 @@ export default function Favorites() {
     usePatientOperations();
 
   return (
-    <Container
-      expanded
-      className="flex-1 items-center justify-center gap-5 py-4"
-    >
-      <FlatList
+    <Container className="h-full w-full flex-1 gap-5 py-4">
+      <FlashList
         data={favoritePatients}
         renderItem={({ item }) => (
           <PatientCard
@@ -28,7 +25,9 @@ export default function Favorites() {
         )}
         ItemSeparatorComponent={ItemSeparator}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ gap: 10 }}
+        contentContainerClassName="gap-5"
+        estimatedItemSize={100}
+        showsVerticalScrollIndicator={false}
       />
     </Container>
   );

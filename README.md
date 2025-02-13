@@ -24,9 +24,10 @@ La app debe contar con dos bottom tabs:
 Para la primera se debe realizar una listado de pacientes, con la posibilidad de agregar, editar y eliminar pacientes.
 
 - Cada paciente debe tener un nombre, apellido, descripcion, una url y una foto.
-- Se debe poder buscar un paciente por nombre utilizando debounce
+- Se debe poder buscar un paciente por nombre utilizando debounce y search params en el endpoint de pacientes.
+- Se debe poder refrescar la lista de pacientes utilizando pull to refresh (RefreshControl).
 - Para ver toda la descripcion del paciente se deben usar animaciones.
-- Para eliminar un paciente se debe usar drag & drop.
+- Para eliminar un paciente se debe usar swipe.
 - Para agregar y editar un paciente se debe usar un modal (bottom sheet).
 - Cada paciente se puede marcar como "favorito", o que es mi paciente (utilizar swipe).
 

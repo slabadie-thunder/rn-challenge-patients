@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FlatList, RefreshControl } from "react-native";
+import { RefreshControl } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
 import { LightItLogo } from "@/assets";
 import {
@@ -31,7 +32,7 @@ export default function Tabs() {
 
   return (
     <Container className="flex-1">
-      <Column gap="lg" className="py-4">
+      <Column gap="lg" className="h-full w-full py-4">
         <TextInput
           placeholder="Search"
           onChangeText={setSearch}
@@ -43,7 +44,7 @@ export default function Tabs() {
           <EmptyState icon={<LightItLogo />} subtitle="No patients found" />
         )}
 
-        <FlatList
+        <FlashList
           data={data}
           renderItem={({ item }) => (
             <PatientCard
@@ -62,9 +63,11 @@ export default function Tabs() {
               colors={[colors.primary[900]]}
             />
           }
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ gap: 10 }}
           ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={(item) => item.id}
+          contentContainerClassName="gap-5"
+          estimatedItemSize={100}
+          onEndReachedThreshold={0.4}
           showsVerticalScrollIndicator={false}
         />
       </Column>
