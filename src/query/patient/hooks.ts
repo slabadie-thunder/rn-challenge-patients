@@ -4,9 +4,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createPatient, deletePatient, editPatient } from "@/api";
 import { patientQueries } from "./queries";
 
-export const useGetPatients = () =>
+export const useGetPatients = (params?: { search?: string }) =>
   useQuery({
-    ...patientQueries.all,
+    ...patientQueries.all(params),
   });
 
 export const useCreatePatient = () => {
@@ -18,7 +18,7 @@ export const useCreatePatient = () => {
         type: "success",
         text1: "Patient created",
       });
-      queryClient.invalidateQueries(patientQueries.all);
+      queryClient.invalidateQueries({ queryKey: patientQueries.all._def });
     },
     meta: {
       errorMessage: "Error creating patient",
@@ -41,7 +41,7 @@ export const useUpdatePatient = () => {
         type: "success",
         text1: "Patient updated",
       });
-      queryClient.invalidateQueries(patientQueries.all);
+      queryClient.invalidateQueries({ queryKey: patientQueries.all._def });
     },
     meta: {
       errorMessage: "Error updating patient",
@@ -64,7 +64,9 @@ export const useDeletePatient = () => {
         type: "success",
         text1: "Patient deleted",
       });
-      queryClient.invalidateQueries(patientQueries.all);
+      console.log("invalidating");
+      console.log(patientQueries.all._def);
+      queryClient.invalidateQueries({ queryKey: patientQueries.all._def });
     },
     meta: {
       errorMessage: "Error deleting patient",

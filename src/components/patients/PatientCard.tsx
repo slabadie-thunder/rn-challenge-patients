@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Animated, Linking } from "react-native";
 import Swipeable, {
   type SwipeableMethods,
@@ -22,6 +22,10 @@ type PatientCardProps = {
   onDeletePatient: (patient: Patient) => void;
   onFavoritePatient: (patient: Patient) => void;
 };
+
+const INITIAL_ANIMATED_HEIGHT = 20;
+const ANIMATED_HEIGHT = 100;
+const ANIMATION_DURATION = 200;
 
 function RightAction(
   prog: SharedValue<number>,
@@ -72,28 +76,29 @@ const PatientCard = ({
 }: PatientCardProps) => {
   const [error, setError] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const animatedHeight = useRef(new Animated.Value(20)).current;
+  const animatedHeight = useRef(
+    new Animated.Value(INITIAL_ANIMATED_HEIGHT),
+  ).current;
   const swipeableRef = useRef<SwipeableMethods>(null);
 
-  const toggleExpand = () => {
+  const toggleExpand = useCallback(() => {
     setIsExpanded(!isExpanded);
-    Animated.spring(animatedHeight, {
-      toValue: isExpanded ? 20 : 100,
+    Animated.timing(animatedHeight, {
+      toValue: isExpanded ? INITIAL_ANIMATED_HEIGHT : ANIMATED_HEIGHT,
+      duration: ANIMATION_DURATION,
       useNativeDriver: false,
-      friction: 10,
-      tension: 40,
     }).start();
-  };
+  }, [isExpanded, animatedHeight]);
 
-  const handleFavorite = () => {
+  const handleFavorite = useCallback(() => {
     onFavoritePatient(patient);
     swipeableRef.current?.close();
-  };
+  }, [onFavoritePatient, patient, swipeableRef]);
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     onDeletePatient(patient);
     swipeableRef.current?.close();
-  };
+  }, [onDeletePatient, patient, swipeableRef]);
 
   return (
     <Swipeable

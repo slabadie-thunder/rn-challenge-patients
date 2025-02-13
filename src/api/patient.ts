@@ -13,8 +13,10 @@ export type Patient = {
 export type AddPatientParams = Omit<Patient, "id" | "createdAt" | "avatar">;
 export type EditPatientParams = Omit<Patient, "createdAt">;
 
-export const getPatients = async (): Promise<Patient[]> => {
-  const { data } = await api.get<Patient[]>("/users");
+export const getPatients = async (search?: string): Promise<Patient[]> => {
+  const { data } = await api.get<Patient[]>("/users", {
+    params: search ? { name: search } : undefined,
+  });
   return data;
 };
 
