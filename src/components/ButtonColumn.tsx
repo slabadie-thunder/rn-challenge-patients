@@ -6,22 +6,25 @@ import {
 } from "react-native";
 import { tv, type VariantProps } from "tailwind-variants";
 
-import { Row } from "./flex";
+import { Column } from "./flex";
 import { Icon, type IconName } from "./Icon";
 import { Typography, type TextProps, type TextVariants } from "./Typography";
 
-const buttonVariants = tv({
+const buttonColumnVariants = tv({
   base: "justify-center rounded-md px-4 py-2",
   variants: {
     variant: {
       solid: "bg-primary-500 text-gray-100",
       outline: "border border-red-500 bg-transparent",
       ghost: "bg-transparent",
+      danger: "bg-red-500 text-white",
+      favorite: "bg-orange-500 text-white",
     },
     busy: {
       true: "opacity-50",
     },
     rounded: {
+      none: "rounded-none",
       sm: "rounded-sm",
       md: "rounded-md",
       lg: "rounded-lg",
@@ -36,19 +39,20 @@ const buttonVariants = tv({
   },
 });
 
-type ButtonVariants = VariantProps<typeof buttonVariants>;
+type ButtonColumnVariants = VariantProps<typeof buttonColumnVariants>;
 
-type ButtonProps = {
+type ButtonColumnProps = {
   title?: string;
   busy?: boolean;
   icon?: IconName;
+  iconColor?: string;
   iconOnLeft?: boolean;
   textStyle?: TextProps;
   textClasses?: string;
-} & ButtonVariants &
+} & ButtonColumnVariants &
   TouchableOpacityProps;
 
-export const Button: FC<ButtonProps> = ({
+export const ButtonColumn: FC<ButtonColumnProps> = ({
   variant,
   disabled,
   textStyle,
@@ -59,6 +63,7 @@ export const Button: FC<ButtonProps> = ({
   rounded,
   iconOnLeft = false,
   textClasses,
+  iconColor,
   children,
   ...props
 }) => {
@@ -70,18 +75,18 @@ export const Button: FC<ButtonProps> = ({
   );
 
   const iconComponent = useMemo(() => {
-    if (icon) return <Icon name={icon} />;
-  }, [icon]);
+    if (icon) return <Icon name={icon} color={iconColor} />;
+  }, [icon, iconColor]);
 
   return (
     <TouchableOpacity
       accessibilityState={{ busy }}
       accessibilityRole="button"
       disabled={disabled || busy}
-      className={buttonVariants({ variant, busy, rounded, className })}
+      className={buttonColumnVariants({ variant, busy, rounded, className })}
       {...props}
     >
-      <Row center={!icon} className="items-center">
+      <Column center={!icon} className="items-center">
         {iconOnLeft && iconComponent}
         {title && (
           <Typography {...textType} {...textStyle} className={textClasses}>
@@ -91,7 +96,7 @@ export const Button: FC<ButtonProps> = ({
         {children}
         {!iconOnLeft && iconComponent}
         {busy && <ActivityIndicator />}
-      </Row>
+      </Column>
     </TouchableOpacity>
   );
 };
