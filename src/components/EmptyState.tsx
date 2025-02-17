@@ -37,7 +37,6 @@ export function EmptyState({
         <Button
           onPress={onSuggestedAction}
           className="mt-5 w-full bg-tertiary-950"
-          // textStyle={{ color: "white" }}
           title={actionLabel}
         />
       )}
