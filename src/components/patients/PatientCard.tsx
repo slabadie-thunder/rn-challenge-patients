@@ -158,7 +158,7 @@ const PatientCard = ({
             variant="ghost"
             icon={isExpanded ? "arrowup" : "arrowdown"}
             onPress={toggleExpand}
-          ></Button>
+          />
         </Column>
       </Row>
     </Swipeable>
