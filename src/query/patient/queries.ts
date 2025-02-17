@@ -3,10 +3,10 @@ import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { getPatient, getPatients } from "@/api";
 
 export const patientQueries = createQueryKeys("patients", {
-  all: {
-    queryKey: null,
-    queryFn: () => getPatients(),
-  },
+  all: (params?: { search?: string }) => ({
+    queryKey: [{ search: params?.search }, params],
+    queryFn: () => getPatients(params?.search),
+  }),
   detail: (pateitnId: string) => ({
     queryKey: [pateitnId],
     queryFn: () => getPatient(pateitnId),
